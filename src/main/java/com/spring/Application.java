@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean;
 
 import com.spring.amqp.Sender;
 import com.spring.condition.service.ListService;
+import com.spring.eventlisenter.MyApplicationEnvironmentPreparedEventListener;
+import com.spring.eventlisenter.MyApplicationFailedEventListener;
+import com.spring.eventlisenter.MyApplicationPreparedEventListener;
+import com.spring.eventlisenter.MyApplicationStartedEventListener;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner{
@@ -18,7 +22,12 @@ public class Application implements CommandLineRunner{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SpringApplication.run(Application.class, args);
+		SpringApplication app = new SpringApplication(Application.class);
+		app.addListeners(new MyApplicationEnvironmentPreparedEventListener(),
+				new MyApplicationFailedEventListener(),
+				new MyApplicationPreparedEventListener(),
+				new MyApplicationStartedEventListener());
+		app.run(args);
 	}
 
 	@Override
@@ -26,9 +35,9 @@ public class Application implements CommandLineRunner{
 		System.out.println(listService.showListCmd());
 	}
 	
-	@Bean
-    public Queue helloQueue() {
-        return new Queue("hello");
-    }
+//	@Bean
+//    public Queue helloQueue() {
+//        return new Queue("hello");
+//    }
 	
 }

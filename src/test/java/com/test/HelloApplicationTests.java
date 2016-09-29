@@ -7,15 +7,16 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.spring.Application;
+import com.spring.amqp.Send;
 import com.spring.amqp.Sender;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 public class HelloApplicationTests {
     @Autowired
-    private Sender sender;
+    private Send sender;
     @Test
     public void hello() throws Exception {
-        sender.send();
+        sender.sendMsg("1234567890");;
     }
 }
